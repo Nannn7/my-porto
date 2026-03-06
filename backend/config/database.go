@@ -2,6 +2,9 @@ package config
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"strings"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -9,17 +12,42 @@ import (
 
 var DB *gorm.DB
 
-func ConnectDB() {
+func ConnectDB() error {
+	envKeys := []string{"DB_HOST", "DB_PORT", "DB_USER", "DB_PASS", "DB_NAME", "DB_SSLMODE"}
+	values := make(map[string]string, len(envKeys))
+	missing := make([]string, 0)
 
-	dsn := "host=127.0.0.1 user=postgres password=postgres dbname=myporto port=5432 sslmode=prefer"
-
-	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-
-	if err != nil {
-		panic(err)
+	for _, key := range envKeys {
+		value := strings.TrimSpace(os.Getenv(key))
+		if value == "" {
+			missing = append(missing, key)
+			continue
+		}
+		values[key] = value
 	}
 
-	fmt.Println("Connected to database")
+	if len(missing) > 0 {
+		err := fmt.Errorf("missing required database environment variables: %s", strings.Join(missing, ", "))
+		log.Printf("database configuration error: %v", err)
+		return err
+	}
 
+	dsn := fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
+		values["DB_HOST"],
+		values["DB_USER"],
+		values["DB_PASS"],
+		values["DB_NAME"],
+		values["DB_PORT"],
+		values["DB_SSLMODE"],
+	)
+
+	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		return fmt.Errorf("failed to connect to database: %w", err)
+	}
+
+	log.Println("Connected to database")
 	DB = database
+	return nil
 }
