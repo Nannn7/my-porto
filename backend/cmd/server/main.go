@@ -22,6 +22,13 @@ func main() {
 	}
 
 	if err := config.DB.AutoMigrate(&models.Project{}); err != nil {
+	config.ConnectDB()
+	if err := config.DB.AutoMigrate(
+		&models.Project{},
+		&models.Skill{},
+		&models.ContactMessage{},
+		&models.AdminUser{},
+	); err != nil {
 		log.Fatal(err)
 	}
 
@@ -32,7 +39,28 @@ func main() {
 	projectService := services.NewProjectService(projectRepository)
 	projectController := controllers.NewProjectController(projectService)
 
-	routes.RegisterRoutes(router, projectController)
+	skillRepository := repository.NewSkillRepository()
+	skillService := services.NewSkillService(skillRepository)
+	skillController := controllers.NewSkillController(skillService)
+
+	contactRepository := repository.NewContactRepository()
+	contactService := services.NewContactService(contactRepository)
+	contactController := controllers.NewContactController(contactService)
+
+	adminRepository := repository.NewAdminRepository()
+	adminService := services.NewAdminService(adminRepository)
+	if err := adminService.EnsureDefaultAdmin(); err != nil {
+		log.Fatal(err)
+	}
+	adminController := controllers.NewAdminController(adminService)
+
+	routes.RegisterRoutes(
+		router,
+		projectController,
+		skillController,
+		contactController,
+		adminController,
+	)
 
 	if err := runServer(router); err != nil {
 		log.Fatal(err)
