@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <script setup>
 import { onMounted, computed } from 'vue'
 import { usePortfolioStore } from '../store'
@@ -47,3 +48,11 @@ const skills = computed(() => store.skills)
 ul { display: flex; flex-wrap: wrap; gap: 0.7rem; padding: 0; list-style: none; }
 li { background: #f1f5f9; padding: 0.45rem 0.8rem; border-radius: 99px; }
 </style>
+=======
+<template>
+  <section>
+    <h1>Home</h1>
+    <p>Selamat datang di portfolio.</p>
+  </section>
+</template>
+>>>>>>> origin/main

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <script setup>
 const navItems = [
   { name: 'Home', to: '/' },
@@ -20,12 +21,22 @@ const navItems = [
       >
         {{ item.name }}
       </RouterLink>
+=======
+<template>
+  <header class="navbar">
+    <nav>
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/projects">Projects</RouterLink>
+      <RouterLink to="/contact">Contact</RouterLink>
+>>>>>>> origin/main
     </nav>
   </header>
 </template>
 
 <style scoped>
 .navbar {
+<<<<<<< HEAD
   position: sticky;
   top: 0;
   z-index: 10;
@@ -40,4 +51,14 @@ const navItems = [
 .navbar__nav { display: flex; gap: 1rem; }
 .navbar__link { color: #cbd5e1; text-decoration: none; }
 .navbar__link--active { color: #fff; border-bottom: 2px solid #38bdf8; }
+=======
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+nav {
+  display: flex;
+  gap: 12px;
+}
+>>>>>>> origin/main
 </style>

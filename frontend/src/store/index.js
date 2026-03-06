@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+<<<<<<< HEAD
 import axios from 'axios'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://localhost:8080/api'
@@ -63,3 +64,21 @@ export const usePortfolioStore = defineStore('portfolio', {
 })
 
 export { API_BASE_URL }
+=======
+import { getProjects } from '../api/axios'
+
+export const useProjectStore = defineStore('projects', {
+  state: () => ({
+    projects: [],
+  }),
+  actions: {
+    async fetchProjects() {
+      try {
+        this.projects = await getProjects()
+      } catch {
+        this.projects = []
+      }
+    },
+  },
+})
+>>>>>>> origin/main

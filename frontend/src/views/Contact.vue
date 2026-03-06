@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <script setup>
 import { reactive, ref } from 'vue'
 import axios from 'axios'
@@ -72,3 +73,11 @@ button {
 }
 button:disabled { opacity: 0.7; }
 </style>
+=======
+<template>
+  <section>
+    <h1>Contact</h1>
+    <p>Silakan hubungi melalui email.</p>
+  </section>
+</template>
+>>>>>>> origin/main

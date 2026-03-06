@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <script setup>
 import { computed, onMounted } from 'vue'
 import { usePortfolioStore } from '../store'
@@ -87,3 +88,11 @@ section { display: grid; gap: 0.8rem; }
 }
 ul { margin: 0; }
 </style>
+=======
+<template>
+  <section>
+    <h1>About</h1>
+    <p>Halaman tentang saya.</p>
+  </section>
+</template>
+>>>>>>> origin/main

@@ -8,14 +8,21 @@ defineProps({
 </script>
 
 <template>
+<<<<<<< HEAD
   <article class="project-card">
     <h3>{{ project.title || project.name || 'Untitled Project' }}</h3>
     <p>{{ project.description || 'No description provided yet.' }}</p>
     <a v-if="project.link" :href="project.link" target="_blank" rel="noopener">View Project</a>
+=======
+  <article class="card">
+    <h3>{{ project.title }}</h3>
+    <p>{{ project.description }}</p>
+>>>>>>> origin/main
   </article>
 </template>
 
 <style scoped>
+<<<<<<< HEAD
 .project-card {
   border: 1px solid #e2e8f0;
   border-radius: 10px;
@@ -26,4 +33,11 @@ defineProps({
 h3 { margin: 0 0 0.5rem; }
 p { color: #334155; }
 a { color: #0284c7; text-decoration: none; font-weight: 600; }
+=======
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+}
+>>>>>>> origin/main
 </style>

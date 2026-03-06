@@ -4,6 +4,7 @@ import Footer from './components/Footer.vue'
 </script>
 
 <template>
+<<<<<<< HEAD
   <div class="app-shell">
     <Navbar />
     <main class="main-content">
@@ -22,5 +23,19 @@ import Footer from './components/Footer.vue'
   max-width: 960px;
   margin: 0 auto;
   padding: 1.5rem;
+=======
+  <Navbar />
+  <main class="container">
+    <RouterView />
+  </main>
+  <Footer />
+</template>
+
+<style scoped>
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px;
+>>>>>>> origin/main
 }
 </style>
