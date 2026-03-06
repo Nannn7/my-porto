@@ -1,24 +1,22 @@
 package main
 
 import (
-	"net/http"
+	"myporto-backend/config"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 
+	config.ConnectDB()
+
 	r := gin.Default()
 
 	r.GET("/api/projects", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"projects": []string{
-				"Portfolio Website",
-				"Todo App",
-				"Ecommerce Demo",
-			},
+		c.JSON(200, gin.H{
+			"message": "API running",
 		})
 	})
 
-	r.Run(":8080")
+	r.RunTLS(":8080", "cert.pem", "key.pem")
 }
