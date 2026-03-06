@@ -1,11 +1,20 @@
-<script setup lang="ts"></script>
+<script setup>
+import Navbar from './components/Navbar.vue'
+import Footer from './components/Footer.vue'
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <Navbar />
+  <main class="container">
+    <RouterView />
+  </main>
+  <Footer />
 </template>
 
-<style scoped></style>
+<style scoped>
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px;
+}
+</style>
