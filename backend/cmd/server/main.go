@@ -21,8 +21,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if err := config.DB.AutoMigrate(&models.Project{}); err != nil {
-	config.ConnectDB()
 	if err := config.DB.AutoMigrate(
 		&models.Project{},
 		&models.Skill{},
@@ -73,8 +71,8 @@ func runServer(router *gin.Engine) error {
 		return router.Run(":8080")
 	}
 
-	certPath := getEnv("TLS_CERT_PATH", "backend/cert/cert.pem")
-	keyPath := getEnv("TLS_KEY_PATH", "backend/cert/key.pem")
+	certPath := getEnv("TLS_CERT_PATH", "cert/cert.pem")
+	keyPath := getEnv("TLS_KEY_PATH", "cert/key.pem")
 
 	log.Printf("Starting server with TLS cert=%s key=%s", certPath, keyPath)
 	return router.RunTLS(":8080", certPath, keyPath)
