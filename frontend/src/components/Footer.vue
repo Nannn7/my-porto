@@ -7,84 +7,36 @@ const profile = computed(() => store.profile)
 </script>
 
 <template>
-  <footer class="footer-wrap">
-    <div class="footer">
+  <footer class="mt-12 border-t border-border bg-bg-elevated">
+    <div class="mx-auto flex w-[min(1120px,94vw)] items-center justify-between gap-5 pb-10 pt-6 max-[900px]:flex-col max-[900px]:items-start">
       <div>
-        <p class="footer__name">Nanda Surya Diffa</p>
-        <p class="footer__caption">
+        <p class="font-display font-bold text-heading">Nanda Surya Diffa</p>
+        <p class="max-w-[620px] text-[0.92rem] text-muted">
           Developer with strong commitment, fast learning curve, and business-oriented technical delivery.
         </p>
       </div>
 
-      <div class="footer__links">
-        <a :href="`mailto:${profile.email}`">{{ profile.email }}</a>
-        <a :href="profile.whatsappUrl" target="_blank" rel="noopener">WhatsApp</a>
-        <a :href="profile.linkedinUrl" target="_blank" rel="noopener">LinkedIn</a>
+      <div class="flex flex-wrap items-center justify-end gap-[0.55rem] max-[900px]:justify-start">
+        <a
+          :href="`mailto:${profile.email}`"
+          class="rounded-full border border-border bg-surface px-[0.72rem] py-[0.46rem] text-[0.86rem] font-semibold text-ink hover:-translate-y-px hover:border-brand"
+          >{{ profile.email }}</a
+        >
+        <a
+          :href="profile.whatsappUrl"
+          target="_blank"
+          rel="noopener"
+          class="rounded-full border border-border bg-surface px-[0.72rem] py-[0.46rem] text-[0.86rem] font-semibold text-ink hover:-translate-y-px hover:border-brand"
+          >WhatsApp</a
+        >
+        <a
+          :href="profile.linkedinUrl"
+          target="_blank"
+          rel="noopener"
+          class="rounded-full border border-border bg-surface px-[0.72rem] py-[0.46rem] text-[0.86rem] font-semibold text-ink hover:-translate-y-px hover:border-brand"
+          >LinkedIn</a
+        >
       </div>
     </div>
   </footer>
 </template>
-
-<style scoped>
-.footer-wrap {
-  margin-top: 3rem;
-  border-top: 1px solid var(--border);
-  background: var(--bg-elevated);
-}
-
-.footer {
-  width: min(1120px, 94vw);
-  margin: 0 auto;
-  padding: 1.5rem 0 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.2rem;
-}
-
-.footer__name {
-  font-family: 'Sora', 'Trebuchet MS', sans-serif;
-  font-weight: 700;
-  color: var(--heading);
-}
-
-.footer__caption {
-  color: var(--muted);
-  font-size: 0.92rem;
-  max-width: 620px;
-}
-
-.footer__links {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.55rem;
-}
-
-.footer__links a {
-  color: var(--ink);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  padding: 0.46rem 0.72rem;
-  border-radius: 999px;
-  font-size: 0.86rem;
-  font-weight: 600;
-}
-
-.footer__links a:hover {
-  border-color: var(--brand);
-  transform: translateY(-1px);
-}
-
-@media (max-width: 900px) {
-  .footer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .footer__links {
-    justify-content: flex-start;
-  }
-}
-</style>

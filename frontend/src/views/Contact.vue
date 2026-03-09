@@ -34,177 +34,100 @@ const submitForm = async () => {
 </script>
 
 <template>
-  <section class="contact-grid">
-    <article class="contact-card contact-card--info reveal">
+  <section class="grid gap-4 [grid-template-columns:minmax(260px,0.95fr)_minmax(320px,1.05fr)] max-[900px]:grid-cols-1">
+    <article
+      class="reveal grid content-start gap-[0.8rem] rounded-lgx border border-border bg-surface p-[1.25rem] shadow-[0_14px_28px_rgba(16,34,40,0.06)]"
+    >
       <h1>Contact</h1>
-      <p>
+      <p class="text-muted">
         Open to collaboration for web application enhancement, middleware integration initiatives, and product development
         support.
       </p>
 
-      <div class="contact-links">
-        <a :href="`mailto:${profile.email}`" class="reveal" style="animation-delay: 120ms">
-          <span>Email</span>
-          <strong>{{ profile.email }}</strong>
+      <div class="grid gap-[0.65rem]">
+        <a
+          :href="`mailto:${profile.email}`"
+          class="reveal grid gap-[0.12rem] rounded-mdx border border-border bg-surface-soft px-[0.86rem] py-[0.74rem] hover:-translate-y-0.5 hover:border-brand"
+          style="animation-delay: 120ms"
+        >
+          <span class="text-[0.8rem] text-muted">Email</span>
+          <strong class="text-[0.92rem] text-heading">{{ profile.email }}</strong>
         </a>
 
-        <a :href="profile.whatsappUrl" target="_blank" rel="noopener" class="reveal" style="animation-delay: 180ms">
-          <span>WhatsApp</span>
-          <strong>Chat directly</strong>
+        <a
+          :href="profile.whatsappUrl"
+          target="_blank"
+          rel="noopener"
+          class="reveal grid gap-[0.12rem] rounded-mdx border border-border bg-surface-soft px-[0.86rem] py-[0.74rem] hover:-translate-y-0.5 hover:border-brand"
+          style="animation-delay: 180ms"
+        >
+          <span class="text-[0.8rem] text-muted">WhatsApp</span>
+          <strong class="text-[0.92rem] text-heading">Chat directly</strong>
         </a>
 
-        <a :href="profile.linkedinUrl" target="_blank" rel="noopener" class="reveal" style="animation-delay: 240ms">
-          <span>LinkedIn</span>
-          <strong>Professional profile</strong>
+        <a
+          :href="profile.linkedinUrl"
+          target="_blank"
+          rel="noopener"
+          class="reveal grid gap-[0.12rem] rounded-mdx border border-border bg-surface-soft px-[0.86rem] py-[0.74rem] hover:-translate-y-0.5 hover:border-brand"
+          style="animation-delay: 240ms"
+        >
+          <span class="text-[0.8rem] text-muted">LinkedIn</span>
+          <strong class="text-[0.92rem] text-heading">Professional profile</strong>
         </a>
       </div>
     </article>
 
-    <article class="contact-card reveal reveal--delay-1">
-      <h2>Send a Message</h2>
-      <form @submit.prevent="submitForm">
-        <label>
+    <article class="reveal reveal--delay-1 rounded-lgx border border-border bg-surface p-[1.25rem] shadow-[0_14px_28px_rgba(16,34,40,0.06)]">
+      <h2 class="mb-3">Send a Message</h2>
+      <form class="grid gap-[0.68rem]" @submit.prevent="submitForm">
+        <label class="grid gap-[0.3rem] font-semibold text-ink">
           Name
-          <input v-model="form.name" type="text" required autocomplete="name" />
+          <input
+            v-model="form.name"
+            type="text"
+            required
+            autocomplete="name"
+            class="rounded-xl border border-border bg-surface-soft px-[0.72rem] py-[0.6rem] text-ink focus:border-brand focus:outline-none focus:ring-2 focus:ring-focus"
+          />
         </label>
 
-        <label>
+        <label class="grid gap-[0.3rem] font-semibold text-ink">
           Email
-          <input v-model="form.email" type="email" required autocomplete="email" />
+          <input
+            v-model="form.email"
+            type="email"
+            required
+            autocomplete="email"
+            class="rounded-xl border border-border bg-surface-soft px-[0.72rem] py-[0.6rem] text-ink focus:border-brand focus:outline-none focus:ring-2 focus:ring-focus"
+          />
         </label>
 
-        <label>
+        <label class="grid gap-[0.3rem] font-semibold text-ink">
           Message
-          <textarea v-model="form.message" rows="6" required></textarea>
+          <textarea
+            v-model="form.message"
+            rows="6"
+            required
+            class="rounded-xl border border-border bg-surface-soft px-[0.72rem] py-[0.6rem] text-ink focus:border-brand focus:outline-none focus:ring-2 focus:ring-focus"
+          ></textarea>
         </label>
 
-        <button type="submit" :disabled="submitting">
+        <button
+          type="submit"
+          :disabled="submitting"
+          class="w-fit cursor-pointer rounded-xl bg-gradient-to-br from-brand to-brand-deep px-[0.94rem] py-[0.62rem] font-bold text-white hover:-translate-y-px disabled:cursor-not-allowed disabled:opacity-70"
+        >
           {{ submitting ? 'Sending...' : 'Send Message' }}
         </button>
       </form>
 
-      <p v-if="status" class="status">{{ status }}</p>
+      <p
+        v-if="status"
+        class="mt-3 rounded-xl border border-dashed border-border bg-surface-soft px-[0.74rem] py-[0.6rem] text-ink"
+      >
+        {{ status }}
+      </p>
     </article>
   </section>
 </template>
-
-<style scoped>
-.contact-grid {
-  display: grid;
-  grid-template-columns: minmax(260px, 0.95fr) minmax(320px, 1.05fr);
-  gap: 1rem;
-}
-
-.contact-card {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  border-radius: var(--radius-lg);
-  padding: 1.25rem;
-  box-shadow: 0 14px 28px rgba(16, 34, 40, 0.06);
-}
-
-.contact-card--info {
-  display: grid;
-  align-content: start;
-  gap: 0.8rem;
-}
-
-.contact-card--info p {
-  color: var(--muted);
-}
-
-.contact-links {
-  display: grid;
-  gap: 0.65rem;
-}
-
-.contact-links a {
-  display: grid;
-  gap: 0.12rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  background: var(--surface-soft);
-  padding: 0.74rem 0.86rem;
-}
-
-.contact-links a:hover {
-  border-color: var(--brand);
-  transform: translateY(-2px);
-}
-
-.contact-links span {
-  color: var(--muted);
-  font-size: 0.8rem;
-}
-
-.contact-links strong {
-  color: var(--heading);
-  font-size: 0.92rem;
-}
-
-h2 {
-  margin-bottom: 0.75rem;
-}
-
-form {
-  display: grid;
-  gap: 0.68rem;
-}
-
-label {
-  display: grid;
-  gap: 0.3rem;
-  font-weight: 600;
-  color: var(--ink);
-}
-
-input,
-textarea {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--surface-soft);
-  padding: 0.6rem 0.72rem;
-  color: var(--ink);
-}
-
-input:focus,
-textarea:focus {
-  outline: 2px solid var(--focus);
-  border-color: var(--brand);
-}
-
-button {
-  width: fit-content;
-  border: 0;
-  border-radius: 12px;
-  color: #fff;
-  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-deep) 100%);
-  font-weight: 700;
-  padding: 0.62rem 0.94rem;
-  cursor: pointer;
-}
-
-button:hover {
-  transform: translateY(-1px);
-}
-
-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.status {
-  margin-top: 0.75rem;
-  border: 1px dashed var(--border);
-  border-radius: 12px;
-  padding: 0.6rem 0.74rem;
-  background: var(--surface-soft);
-  color: var(--ink);
-}
-
-@media (max-width: 900px) {
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-}
-</style>

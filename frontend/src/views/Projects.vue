@@ -18,13 +18,13 @@ const delayStyle = (index, base = 0) => ({ animationDelay: `${base + index * 80}
 </script>
 
 <template>
-  <section class="section-card reveal">
+  <section class="reveal rounded-lgx border border-border bg-surface p-[1.2rem] shadow-[0_14px_28px_rgba(16,34,40,0.06)]">
     <h1>Career Highlights</h1>
-    <p class="section-desc">
+    <p class="mt-[0.4rem] text-muted">
       Representative works aligned with real responsibilities from internship to full-time professional delivery.
     </p>
 
-    <div class="project-grid">
+    <div class="mt-4 grid grid-cols-2 gap-[0.85rem] max-[920px]:grid-cols-1">
       <ProjectCard
         v-for="(project, index) in featuredProjects"
         :key="project.title"
@@ -35,19 +35,34 @@ const delayStyle = (index, base = 0) => ({ animationDelay: `${base + index * 80}
     </div>
   </section>
 
-  <section class="section-card section-card--soft reveal reveal--delay-1">
+  <section
+    class="reveal reveal--delay-1 mt-4 rounded-lgx border border-border bg-gradient-to-b from-surface to-surface-soft p-[1.2rem] shadow-[0_14px_28px_rgba(16,34,40,0.06)]"
+  >
     <h2>Additional Projects from API</h2>
-    <p class="section-desc">
+    <p class="mt-[0.4rem] text-muted">
       This section is connected to backend endpoint and can be used to display external portfolio items.
     </p>
 
-    <p v-if="loadingRemoteProjects" class="state-msg">Loading additional projects...</p>
-    <p v-else-if="remoteProjectsError" class="state-msg state-msg--error">{{ remoteProjectsError }}</p>
-    <p v-else-if="!remoteProjects.length" class="state-msg">
+    <p
+      v-if="loadingRemoteProjects"
+      class="mt-[0.8rem] rounded-xl border border-dashed border-border bg-surface-soft px-[0.85rem] py-[0.7rem] text-ink"
+    >
+      Loading additional projects...
+    </p>
+    <p
+      v-else-if="remoteProjectsError"
+      class="mt-[0.8rem] rounded-xl border border-dashed border-[#fdba74] bg-[#fff7ed] px-[0.85rem] py-[0.7rem] text-[#9a3412]"
+    >
+      {{ remoteProjectsError }}
+    </p>
+    <p
+      v-else-if="!remoteProjects.length"
+      class="mt-[0.8rem] rounded-xl border border-dashed border-border bg-surface-soft px-[0.85rem] py-[0.7rem] text-ink"
+    >
       No additional project data available yet. You can still review curated highlights above.
     </p>
 
-    <div v-else class="project-grid">
+    <div v-else class="mt-4 grid grid-cols-2 gap-[0.85rem] max-[920px]:grid-cols-1">
       <ProjectCard
         v-for="(project, index) in remoteProjects"
         :key="project.id || project.slug || project.title || project.name"
@@ -58,54 +73,3 @@ const delayStyle = (index, base = 0) => ({ animationDelay: `${base + index * 80}
     </div>
   </section>
 </template>
-
-<style scoped>
-.section-card {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  border-radius: var(--radius-lg);
-  padding: 1.2rem;
-  box-shadow: 0 14px 28px rgba(16, 34, 40, 0.06);
-}
-
-.section-card + .section-card {
-  margin-top: 1rem;
-}
-
-.section-card--soft {
-  background: linear-gradient(170deg, var(--surface) 0%, var(--surface-soft) 100%);
-}
-
-.section-desc {
-  color: var(--muted);
-  margin-top: 0.4rem;
-}
-
-.project-grid {
-  margin-top: 1rem;
-  display: grid;
-  gap: 0.85rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.state-msg {
-  margin-top: 0.8rem;
-  padding: 0.7rem 0.85rem;
-  border: 1px dashed var(--border);
-  border-radius: 12px;
-  color: var(--ink);
-  background: var(--surface-soft);
-}
-
-.state-msg--error {
-  border-color: #fdba74;
-  color: #9a3412;
-  background: #fff7ed;
-}
-
-@media (max-width: 920px) {
-  .project-grid {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
