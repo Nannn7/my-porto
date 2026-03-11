@@ -1,0 +1,42 @@
+CREATE TABLE IF NOT EXISTS projects (
+  id BIGSERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
+  tech_stack VARCHAR(300) NOT NULL DEFAULT '',
+  image_url VARCHAR(600) NOT NULL DEFAULT '',
+  project_url VARCHAR(600) NOT NULL DEFAULT '',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS skills (
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  category VARCHAR(255) NOT NULL DEFAULT '',
+  level VARCHAR(255) NOT NULL DEFAULT ''
+);
+
+CREATE TABLE IF NOT EXISTS contact_messages (
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS admin_users (
+  id BIGSERIAL PRIMARY KEY,
+  username VARCHAR(255) NOT NULL UNIQUE,
+  password TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS admin_sessions (
+  id BIGSERIAL PRIMARY KEY,
+  admin_user_id BIGINT NOT NULL REFERENCES admin_users(id) ON DELETE CASCADE,
+  token_hash VARCHAR(128) NOT NULL UNIQUE,
+  expires_at TIMESTAMPTZ NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_admin_sessions_admin_user_id ON admin_sessions(admin_user_id);
+CREATE INDEX IF NOT EXISTS idx_admin_sessions_expires_at ON admin_sessions(expires_at);

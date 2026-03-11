@@ -1,6 +1,8 @@
-﻿<script setup>
+<script setup>
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useTheme } from '../composables/useTheme'
+import { useAdminStore } from '../store/admin'
 
 const navItems = [
   { name: 'Home', to: '/' },
@@ -11,12 +13,21 @@ const navItems = [
 
 const { theme, toggleTheme } = useTheme()
 const isDark = computed(() => theme.value === 'dark')
+const router = useRouter()
+const adminStore = useAdminStore()
+const isAdminAuthenticated = computed(() => adminStore.isAuthenticated)
+const adminRoute = computed(() => (isAdminAuthenticated.value ? '/admin/projects' : '/admin/login'))
+
+const logoutAdmin = async () => {
+  adminStore.logout()
+  await router.push('/')
+}
 </script>
 
 <template>
   <header class="sticky top-0 z-20 border-b border-border bg-bg-elevated/90 backdrop-blur">
     <div
-      class="reveal mx-auto flex min-h-20 w-[min(1120px,94vw)] items-center justify-between gap-4 py-3 max-[1080px]:flex-wrap max-[1080px]:justify-center max-[1080px]:pb-[0.9rem] max-[1080px]:text-center"
+      class="reveal flex min-h-20 w-full items-center justify-between gap-4 px-4 py-3 md:px-8 lg:px-12 max-[1080px]:flex-wrap max-[1080px]:justify-center max-[1080px]:pb-[0.9rem] max-[1080px]:text-center"
     >
       <RouterLink to="/" class="grid gap-0.5 max-[1080px]:w-full" aria-label="Go to home page">
         <p class="font-display text-[0.96rem] font-bold text-heading">Nanda Surya Diffa</p>
@@ -36,6 +47,20 @@ const isDark = computed(() => theme.value === 'dark')
       </nav>
 
       <div class="flex items-center gap-2 max-[1080px]:w-full max-[1080px]:justify-center">
+        <RouterLink
+          :to="adminRoute"
+          class="rounded-full border border-border bg-surface px-3 py-2 text-[0.8rem] font-bold text-ink hover:border-brand"
+        >
+          {{ isAdminAuthenticated ? 'Dashboard' : 'Admin' }}
+        </RouterLink>
+        <button
+          v-if="isAdminAuthenticated"
+          type="button"
+          class="cursor-pointer rounded-full border border-border bg-surface px-3 py-2 text-[0.8rem] font-bold text-ink hover:border-brand"
+          @click="logoutAdmin"
+        >
+          Logout
+        </button>
         <button
           class="cursor-pointer rounded-full border border-border bg-surface px-3 py-2 text-[0.8rem] font-bold text-ink hover:border-brand"
           type="button"

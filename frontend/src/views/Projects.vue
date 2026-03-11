@@ -6,7 +6,7 @@ import ProjectCard from '../components/ProjectCard.vue'
 const store = usePortfolioStore()
 
 onMounted(() => {
-  store.fetchRemoteProjects()
+  store.fetchRemoteProjects(true)
 })
 
 const featuredProjects = computed(() => store.featuredProjects)

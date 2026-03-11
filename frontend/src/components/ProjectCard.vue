@@ -1,4 +1,4 @@
-﻿<script setup>
+<script setup>
 import { computed } from 'vue'
 
 const props = defineProps({
@@ -10,8 +10,22 @@ const props = defineProps({
 
 const title = computed(() => props.project.title || props.project.name || 'Untitled work item')
 const description = computed(() => props.project.description || 'No description available yet.')
-const stack = computed(() => (Array.isArray(props.project.stack) ? props.project.stack : []))
+const stack = computed(() => {
+  if (Array.isArray(props.project.stack)) {
+    return props.project.stack
+  }
+
+  if (typeof props.project.tech_stack === 'string') {
+    return props.project.tech_stack
+      .split(',')
+      .map((item) => item.trim())
+      .filter(Boolean)
+  }
+
+  return []
+})
 const outcomes = computed(() => (Array.isArray(props.project.outcomes) ? props.project.outcomes : []))
+const link = computed(() => props.project.link || props.project.project_url || '')
 </script>
 
 <template>
@@ -51,8 +65,8 @@ const outcomes = computed(() => (Array.isArray(props.project.outcomes) ? props.p
     </div>
 
     <a
-      v-if="project.link"
-      :href="project.link"
+      v-if="link"
+      :href="link"
       target="_blank"
       rel="noopener"
       class="w-fit rounded-full bg-accent px-[0.78rem] py-[0.42rem] text-[0.83rem] font-bold text-white hover:-translate-y-px"

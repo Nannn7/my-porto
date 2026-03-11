@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"gorm.io/driver/postgres"
@@ -13,6 +14,10 @@ import (
 var DB *gorm.DB
 
 func ConnectDB() error {
+	if err := LoadDotEnvIfExists(".env", filepath.Join("backend", ".env")); err != nil {
+		return fmt.Errorf("failed loading .env file: %w", err)
+	}
+
 	envKeys := []string{"DB_HOST", "DB_PORT", "DB_USER", "DB_PASS", "DB_NAME", "DB_SSLMODE"}
 	values := make(map[string]string, len(envKeys))
 	missing := make([]string, 0)

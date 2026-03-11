@@ -2,8 +2,6 @@ package main
 
 import (
 	"log"
-	"os"
-	"strings"
 
 	"myporto-backend/config"
 	"myporto-backend/controllers"
@@ -21,13 +19,18 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if err := config.DB.AutoMigrate(
-		&models.Project{},
-		&models.Skill{},
-		&models.ContactMessage{},
-		&models.AdminUser{},
-	); err != nil {
-		log.Fatal(err)
+	if config.GetEnvBool("APP_AUTO_MIGRATE", false) {
+		if err := config.DB.AutoMigrate(
+			&models.Project{},
+			&models.Skill{},
+			&models.ContactMessage{},
+			&models.AdminUser{},
+			&models.AdminSession{},
+		); err != nil {
+			log.Fatal(err)
+		}
+
+		log.Println("AutoMigrate completed")
 	}
 
 	router := gin.Default()
@@ -51,6 +54,7 @@ func main() {
 		log.Fatal(err)
 	}
 	adminController := controllers.NewAdminController(adminService)
+	adminAuthMiddleware := middleware.AdminAuthMiddleware(adminService)
 
 	routes.RegisterRoutes(
 		router,
@@ -58,6 +62,7 @@ func main() {
 		skillController,
 		contactController,
 		adminController,
+		adminAuthMiddleware,
 	)
 
 	if err := runServer(router); err != nil {
@@ -66,22 +71,17 @@ func main() {
 }
 
 func runServer(router *gin.Engine) error {
-	if strings.EqualFold(os.Getenv("APP_ENV"), "development") {
-		log.Println("Starting server in non-TLS mode for development")
-		return router.Run(":8080")
+	port := config.GetEnv("APP_PORT", "8080")
+	listenAddr := ":" + port
+
+	if !config.GetEnvBool("APP_TLS_ENABLED", false) {
+		log.Printf("Starting server in HTTP mode on %s", listenAddr)
+		return router.Run(listenAddr)
 	}
 
-	certPath := getEnv("TLS_CERT_PATH", "cert/cert.pem")
-	keyPath := getEnv("TLS_KEY_PATH", "cert/key.pem")
+	certPath := config.GetEnv("TLS_CERT_PATH", "cert/cert.pem")
+	keyPath := config.GetEnv("TLS_KEY_PATH", "cert/key.pem")
 
-	log.Printf("Starting server with TLS cert=%s key=%s", certPath, keyPath)
-	return router.RunTLS(":8080", certPath, keyPath)
-}
-
-func getEnv(key, fallback string) string {
-	value := strings.TrimSpace(os.Getenv(key))
-	if value == "" {
-		return fallback
-	}
-	return value
+	log.Printf("Starting server with TLS on %s cert=%s key=%s", listenAddr, certPath, keyPath)
+	return router.RunTLS(listenAddr, certPath, keyPath)
 }

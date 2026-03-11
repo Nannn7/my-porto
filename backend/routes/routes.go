@@ -12,6 +12,7 @@ func RegisterRoutes(
 	skillController *controllers.SkillController,
 	contactController *controllers.ContactController,
 	adminController *controllers.AdminController,
+	adminAuthMiddleware gin.HandlerFunc,
 ) {
 	api := router.Group("/api")
 	{
@@ -22,9 +23,15 @@ func RegisterRoutes(
 		admin := api.Group("/admin")
 		{
 			admin.POST("/login", adminController.Login)
-			admin.POST("/projects", projectController.CreateProject)
-			admin.PUT("/projects/:id", projectController.UpdateProject)
-			admin.DELETE("/projects/:id", projectController.DeleteProject)
+
+			protected := admin.Group("")
+			protected.Use(adminAuthMiddleware)
+			{
+				protected.GET("/projects", projectController.GetProjects)
+				protected.POST("/projects", projectController.CreateProject)
+				protected.PUT("/projects/:id", projectController.UpdateProject)
+				protected.DELETE("/projects/:id", projectController.DeleteProject)
+			}
 		}
 	}
 }

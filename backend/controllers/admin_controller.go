@@ -29,10 +29,16 @@ func (ac *AdminController) Login(c *gin.Context) {
 		return
 	}
 
-	if err := ac.service.Login(request.Username, request.Password); err != nil {
+	token, expiresAt, username, err := ac.service.Login(request.Username, request.Password)
+	if err != nil {
 		utils.Error(c, http.StatusUnauthorized, "login failed", err.Error())
 		return
 	}
 
-	utils.Success(c, http.StatusOK, "login success", gin.H{"username": request.Username})
+	utils.Success(c, http.StatusOK, "login success", gin.H{
+		"username":   username,
+		"token":      token,
+		"expires_at": expiresAt,
+		"token_type": "Bearer",
+	})
 }
