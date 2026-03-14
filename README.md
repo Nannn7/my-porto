@@ -6,15 +6,11 @@ Monorepo portfolio dengan:
 
 ## Fitur Utama
 - Public portfolio pages (`/`, `/about`, `/projects`, `/contact`)
-- Public API: `GET /api/projects`
 - Admin auth berbasis session token (Bearer)
 - Admin API CRUD project dengan validasi payload
 - Admin panel frontend:
   - `/admin/login`
   - `/admin/projects` (list, create, edit, delete)
-- Konfigurasi sensitif dipindah ke environment variable
-- CORS diperketat via whitelist origin
-- Template reverse proxy production (Nginx)
 
 ## Struktur Folder
 ```txt
@@ -83,29 +79,14 @@ Frontend default: `http://localhost:5173`
 ## Migration (ala artisan migrate)
 Command dijalankan dari folder `backend/`.
 
-### Create migration file baru
-```bash
-go run ./cmd/migrate create add_project_slug
-```
-
 ### Jalankan semua migration pending (`up`)
 ```bash
 go run ./cmd/migrate up
 ```
 
-### Jalankan migration per step
-```bash
-go run ./cmd/migrate up --steps 1
-```
-
 ### Lihat status migration
 ```bash
 go run ./cmd/migrate status
-```
-
-### Rollback migration (`down`)
-```bash
-go run ./cmd/migrate down --steps 1
 ```
 
 Catatan:
@@ -117,22 +98,6 @@ Akun admin default dibuat otomatis jika tabel admin masih kosong.
 Nilainya diambil dari env:
 - `DEFAULT_ADMIN_USERNAME`
 - `DEFAULT_ADMIN_PASSWORD`
-
-## API Ringkas
-Base path: `/api`
-
-### Public
-- `GET /health`
-- `GET /projects`
-- `GET /skills`
-- `POST /contact`
-
-### Admin
-- `POST /admin/login`
-- `GET /admin/projects` (auth)
-- `POST /admin/projects` (auth)
-- `PUT /admin/projects/:id` (auth)
-- `DELETE /admin/projects/:id` (auth)
 
 ### Header Auth Admin
 ```http
@@ -146,16 +111,6 @@ Authorization: Bearer <session_token>
 - `image_url`: optional, URL valid
 - `project_url`: optional, URL valid
 
-## Production Reverse Proxy
-Template Nginx tersedia di:
-- `deploy/nginx/my-porto.conf`
-
-Skema yang disarankan:
-- Nginx handle TLS publik (`443`)
-- Static frontend dari `frontend/dist`
-- Path `/api/*` diproxy ke backend (`127.0.0.1:8080`)
-- Backend jalan HTTP internal (`APP_TLS_ENABLED=false`)
-
 ## Build
 ### Frontend
 ```bash
@@ -168,7 +123,3 @@ npm run build
 cd backend
 go build -o myporto-api ./cmd/server
 ```
-
-## Deploy Tanpa VPS
-Panduan deploy untuk stack `Vercel + Render + Neon` tersedia di:
-- `deploy/vercel-render-neon.md`
