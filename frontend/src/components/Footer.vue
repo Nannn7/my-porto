@@ -28,7 +28,7 @@ const logoutAdmin = async () => {
       </div>
 
       <div class="flex flex-wrap items-center justify-end gap-[0.55rem] max-[900px]:justify-start">
-        <RouterLink
+        <!-- <RouterLink
           :to="adminRoute"
           class="rounded-full border border-border bg-surface px-[0.72rem] py-[0.46rem] text-[0.86rem] font-semibold text-ink hover:-translate-y-px hover:border-brand"
         >
@@ -41,7 +41,7 @@ const logoutAdmin = async () => {
           @click="logoutAdmin"
         >
           Logout
-        </button>
+        </button> -->
         <a
           :href="`mailto:${profile.email}`"
           class="rounded-full border border-border bg-surface px-[0.72rem] py-[0.46rem] text-[0.86rem] font-semibold text-ink hover:-translate-y-px hover:border-brand"

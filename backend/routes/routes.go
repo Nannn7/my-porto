@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"net/http"
+
 	"myporto-backend/controllers"
 
 	"github.com/gin-gonic/gin"
@@ -16,6 +18,13 @@ func RegisterRoutes(
 ) {
 	api := router.Group("/api")
 	{
+		api.GET("/health", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{
+				"success": true,
+				"message": "ok",
+			})
+		})
+
 		api.GET("/projects", projectController.GetProjects)
 		api.GET("/skills", skillController.GetSkills)
 		api.POST("/contact", contactController.CreateContact)

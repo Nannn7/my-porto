@@ -71,7 +71,7 @@ func main() {
 }
 
 func runServer(router *gin.Engine) error {
-	port := config.GetEnv("APP_PORT", "8080")
+	port := config.GetEnv("PORT", config.GetEnv("APP_PORT", "8080"))
 	listenAddr := ":" + port
 
 	if !config.GetEnvBool("APP_TLS_ENABLED", false) {

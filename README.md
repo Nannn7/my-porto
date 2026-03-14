@@ -44,8 +44,10 @@ cp .env.example .env
 
 Variable penting backend:
 - `APP_PORT` (default `8080`)
+- `PORT` (diprioritaskan di platform seperti Render/Railway)
 - `APP_TLS_ENABLED` (`false` untuk mode reverse proxy)
 - `APP_AUTO_MIGRATE` (`false` direkomendasikan; aktifkan `true` hanya jika butuh AutoMigrate GORM)
+- `DATABASE_URL` (direkomendasikan untuk managed Postgres seperti Neon)
 - `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASS`, `DB_NAME`, `DB_SSLMODE`
 - `DEFAULT_ADMIN_USERNAME`, `DEFAULT_ADMIN_PASSWORD`
 - `ADMIN_SESSION_TTL_HOURS`
@@ -120,6 +122,7 @@ Nilainya diambil dari env:
 Base path: `/api`
 
 ### Public
+- `GET /health`
 - `GET /projects`
 - `GET /skills`
 - `POST /contact`
@@ -165,3 +168,7 @@ npm run build
 cd backend
 go build -o myporto-api ./cmd/server
 ```
+
+## Deploy Tanpa VPS
+Panduan deploy untuk stack `Vercel + Render + Neon` tersedia di:
+- `deploy/vercel-render-neon.md`

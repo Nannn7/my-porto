@@ -47,7 +47,7 @@ const logoutAdmin = async () => {
       </nav>
 
       <div class="flex items-center gap-2 max-[1080px]:w-full max-[1080px]:justify-center">
-        <RouterLink
+        <!-- <RouterLink
           :to="adminRoute"
           class="rounded-full border border-border bg-surface px-3 py-2 text-[0.8rem] font-bold text-ink hover:border-brand"
         >
@@ -60,7 +60,7 @@ const logoutAdmin = async () => {
           @click="logoutAdmin"
         >
           Logout
-        </button>
+        </button> -->
         <button
           class="cursor-pointer rounded-full border border-border bg-surface px-3 py-2 text-[0.8rem] font-bold text-ink hover:border-brand"
           type="button"
